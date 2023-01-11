@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            <link rel="stylesheet" type="text/css" href="css.css" />
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <main>
+        <nav>
+            <div class="nav-right hidden-xs">
+            <div class="button" id="btn">
+                <div class="bar top"></div>
+                <div class="bar middle"></div>
+                <div class="bar bottom"></div>
+            </div>
+            </div>
+            <!-- nav-right -->
+        </nav>
+        {% block body %}
+        {% endblock %}
+        </main>
+        <div class="sidebar">
+        <ul class="sidebar-list">
+            <li class="sidebar-item"><a href="#" class="sidebar-anchor">search</a></li>
+            <li class="sidebar-item"><a href="#" class="sidebar-anchor">New</a></li>
+            <li class="sidebar-item"><a href="#" class="sidebar-anchor">Admim</a></li>
+        </ul>
+        </div>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="js.js"></script>
+    </body>
+</html>
