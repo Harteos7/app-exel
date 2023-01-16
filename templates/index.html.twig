@@ -9,27 +9,16 @@
 </style>
 
 <div class="example-wrapper">
-<table>
-    <thead>
-        <tr>
-            <th colspan="2">The table header</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-        {% for key,value in array %}
-            {% if  key |slice(0, 1) == "A" %}
+{% for key,value in array %}
+    {% if  key |slice(0, 1) == "A" %}
 
-            {{key}}
-            <br>
-            {{ value }}
-            <br>
+    {{key}}
+    <br>
+    {{ value }}
+    <br>
 
-            {% endif %}
-        {% endfor %}
-        </tr>
-    </tbody>
-</table>
+    {% endif %}
+{% endfor %}
 </div>
 
 

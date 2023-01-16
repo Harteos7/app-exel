@@ -16,16 +16,16 @@ class Controller extends AbstractController
     {
         return $this->render('/index.html.twig', [
             'controller_name' => 'Controller',
-            'array' => $this->read('../../Applications FM.xlsx')
+            'array' => $this->read('../../Applications FM.xlsx','VI et MP')
         ]);  
     }
 
-    public function read(string $exel)
+    public function read(string $exel, string $sheetC)
     {
 
         //load spreadsheet
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(strval($exel));
-        $sheet = $spreadsheet->getSheetByName('VI et MP');
+        $sheet = $spreadsheet->getSheetByName(strval($sheetC));
 
         $arr = array();
         $letter ='A';
@@ -54,9 +54,6 @@ class Controller extends AbstractController
             } else
                 $arr[strval($id)] = strval($cell); // we put everything in array (the key is the coordinates and the value of their data)
         }
-
-        echo $letterM;
-        echo $numberM;
         
         $letter = 'A';
         for ($number = 1; ;) { // $number and $letter are the coordinates (A1, A2, B2, C3, ...)
