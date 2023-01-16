@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello Controller!{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block body %}
 <style>
@@ -9,8 +9,28 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<table>
+    <thead>
+        <tr>
+            <th colspan="2">The table header</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        {% for key,value in array %}
+            {% if  key |slice(0, 1) == "A" %}
+
+            {{key}}
+            <br>
+            {{ value }}
+            <br>
+
+            {% endif %}
+        {% endfor %}
+        </tr>
+    </tbody>
+</table>
 </div>
 
-{{ array }}
+
 {% endblock %}
