@@ -16,62 +16,47 @@ class Controller extends AbstractController
     {
         return $this->render('/index.html.twig', [
             'controller_name' => 'Controller',
-            'array' => json_encode($this->read('C:\02 Mon projet\exel\hello world.xlsx'))
-        ]);
-
-
+            'array' => $this->read('../../Applications FM.xlsx')
+        ]);  
     }
-
-
-
-
-
-
-
-
 
     public function read(string $exel)
     {
 
         //load spreadsheet
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(strval($exel));
-        $sheet = $spreadsheet->getActiveSheet();
+        $sheet = $spreadsheet->getSheetByName('VI et MP');
 
         $arr = array();
-        $letter = 'A';
+        $letter ='A';
+        $letterM='A';  //$letterM is the largest letter used in the coordinates of the exel table
+        $numberM=0;   //$numberM is the largest number used in the coordinates of the exel array
         for ($number = 1; ; $number++) { // $number and $letter are the coordinates (A1, A2, B2, C3, ...)
-
+            
             $id = strval($letter) . strval($number); // $id is the coordinates of the exel box
-            $cell = $sheet->getCell($id); // $cell is the content of the exel box
+            $cell = $sheet->getCell($id);// $cell is the content of the exel box
+            if($number>$numberM){
+                $numberM = $number;
+            }
             if ($cell == '') { // we check that the new cell has data otherwise we change the column
                 $letter++;
+                $letterM=$letter;  //$letterM is the largest letter used in the coordinates of the exel table;
                 $number = 1;
                 $id = strval($letter) . strval($number);
                 $cell = $sheet->getCell($id);
 
                 if ($cell == '') {
+                    $letterM = substr(strval($letterM), -1); //We recover the letter of before because this one corresponds to an empty column
                     break;
                 } // we check if the first cell of the new column has data if not, we stop the for (break)
                 else
                     $arr[strval($id)] = strval($cell);
-
             } else
                 $arr[strval($id)] = strval($cell); // we put everything in array (the key is the coordinates and the value of their data)
         }
 
-        $letterM='';  //$letterM is the largest letter used in the coordinates of the exel table
-        $numberM=0;   //$numberM is the largest number used in the coordinates of the exel array
-
-        foreach ($arr as $cle => $valeur) {
-            $letterM = strval($letterM) . strval($cle[0]);
-        }
-        $letterM = substr(strval($letterM), -1); //gets the largest letter
-
-        foreach ($arr as $cle => $valeur) {
-            if($numberM<strval($cle[1])){
-                $numberM = strval($cle[1]); //get the largest number of coordinates
-            }
-        }
+        echo $letterM;
+        echo $numberM;
         
         $letter = 'A';
         for ($number = 1; ;) { // $number and $letter are the coordinates (A1, A2, B2, C3, ...)
