@@ -16,7 +16,8 @@ class Controller extends AbstractController
     {
         return $this->render('/index.html.twig', [
             'controller_name' => 'Controller',
-            'array' => $this->read('../../Applications FM.xlsx','VI et MP')
+            'array1' => $this->read('../../Applications FM.xlsx','VI et MP'),
+            'array2' => $this->read('../../Applications FM.xlsx','Liste déroulante de choix')
         ]);  
     }
 
