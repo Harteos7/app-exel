@@ -11,20 +11,14 @@ class NewController extends AbstractController
     #[Route('/new', name: 'app_new')]
     public function index(): Response
     {
-        $array1=$this->read1('../../Applications FM.xlsx', 'Liste déroulante de choix');
-        $array2=$this->read2('../../Applications FM.xlsx','VI et MP');
-
-
-
-
         return $this->render('new/index.html.twig', [
             'controller_name' => 'NewController',
-            'array1' => $array2,
+            'array1' => $this->read('../../Applications FM.xlsx', 'Liste déroulante de choix'),
             'max' => $this->max(),
         ]);
     }
 
-    public function read1(string $exel, string $sheetC)
+    public function read(string $exel, string $sheetC)
     {
 
     //load spreadsheet
@@ -91,29 +85,6 @@ class NewController extends AbstractController
     return $arr;
     }
 
-    public function read2(string $exel, string $sheetC) //this reading is only for the first line (line 1 corresponds to all column names)
-    {
-
-    //load spreadsheet
-    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(strval($exel));
-    $sheet = $spreadsheet->getSheetByName(strval($sheetC));
-
-    $arr = array();
-    $letter ='A';
-
-    for ($number = 1; ; ) { // $number and $letter are the coordinates (A1, A2, B2, C3, ...)
-        
-        $id = strval($letter) . strval($number); // $id is the coordinates of the exel box
-        $cell = $sheet->getCell($id);// $cell is the content of the exel box
-        if ($cell == '') { // we check that the new cell has data otherwise we change the column
-            break;
-        } else
-            $arr[strval($id)] = strval($cell);
-            $letter++; // we put everything in array (the key is the coordinates and the value of their data)
-    }
-    return $arr;
-    }
-
     public function max(){ // the total number of applications is noted in the exel file + the first line
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../../Applications FM.xlsx');
         $sheet = $spreadsheet->getSheetByName('VI et MP');
@@ -122,7 +93,4 @@ class NewController extends AbstractController
         return $cell+1;
     }
 
-    public function input(){
-
-    }
 }
