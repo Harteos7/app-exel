@@ -11,13 +11,12 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Controller extends AbstractController
 {
     
-    #[Route('/', name: 'app_')]
-    public function index(): Response
+    #[Route('/', name: 'app_home')]
+    public function index1(): Response
     {
         return $this->render('/index.html.twig', [
             'controller_name' => 'Controller',
             'array1' => $this->read('../../Applications FM.xlsx','VI et MP'),
-            'array2' => $this->read('../../Applications FM.xlsx','Liste déroulante de choix')
         ]);  
     }
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Hello NewController!{% endblock %}
 
 {% block body %}
 <style>
@@ -9,14 +9,25 @@
 </style>
 
 <div class="example-wrapper">
-Welcome to 
-<img src="icon.png">
-<br>
-<label class="switch">
-	<input type="checkbox" />
-	<span></span>
-</label>
-</div>
 
+{% for key,value in array1 %}
+
+    {{key}}
+    <br>
+    {{ value }}
+    <br>
+
+{% endfor %}
+<br><br>
+{% for key,value in array2 %}
+
+    {{key}}
+    <br>
+    {{ value }}
+    <br>
+
+{% endfor %}
+
+</div>
 
 {% endblock %}

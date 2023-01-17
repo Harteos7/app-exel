@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Search{% endblock %}
 
 {% block body %}
 <style>
@@ -9,13 +9,16 @@
 </style>
 
 <div class="example-wrapper">
-Welcome to 
-<img src="icon.png">
-<br>
-<label class="switch">
-	<input type="checkbox" />
-	<span></span>
-</label>
+{% for key,value in array1 %}
+    {% if  key |slice(0, 1) == "A" %}
+
+    {{key}}
+    <br>
+    {{ value }}
+    <br>
+
+    {% endif %}
+{% endfor %}
 </div>
 
 
