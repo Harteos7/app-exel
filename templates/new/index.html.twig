@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello NewController!{% endblock %}
+{% block title %}New{% endblock %}
 
 {% block body %}
 <style>
@@ -10,6 +10,8 @@
 
 <div class="example-wrapper">
 
+{{max}}
+
 {% for key,value in array1 %}
 
     {{key}}
@@ -18,15 +20,7 @@
     <br>
 
 {% endfor %}
-<br><br>
-{% for key,value in array2 %}
 
-    {{key}}
-    <br>
-    {{ value }}
-    <br>
-
-{% endfor %}
 
 </div>
 

@@ -11,13 +11,16 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class Controller extends AbstractController
 {
     
+
     #[Route('/', name: 'app_home')]
     public function index1(): Response
     {
         return $this->render('/index.html.twig', [
             'controller_name' => 'Controller',
-            'array1' => $this->read('../../Applications FM.xlsx','VI et MP'),
-        ]);  
+            $array1 = $this->read('../../Applications FM.xlsx', 'VI et MP'), //We read and save in a variable to be able to use it several times
+            'array1' => $array1,
+            'max' => $this->max(),
+        ]); 
     }
 
     public function read(string $exel, string $sheetC)
@@ -54,6 +57,11 @@ class Controller extends AbstractController
             } else
                 $arr[strval($id)] = strval($cell); // we put everything in array (the key is the coordinates and the value of their data)
         }
+
+        $sheet->setCellValue('X2', strval($numberM-1));
+        $writer = new Xlsx($spreadsheet);
+        $writer->save($exel);
+        $letter++;
         
         $letter = 'A';
         for ($number = 1; ;) { // $number and $letter are the coordinates (A1, A2, B2, C3, ...)
@@ -85,5 +93,13 @@ class Controller extends AbstractController
             
         }
         return $arr;
+    }
+
+    public function max(){// the total number of applications is noted in the exel file + the first line
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../../Applications FM.xlsx');
+        $sheet = $spreadsheet->getSheetByName('VI et MP');
+        $cell = intval(strval($sheet->getCell('X2'))); // The reading makes that we obtain a string, we pass it in int, +1 because we want the number of line to use and not the number of application (the first line!!)
+
+        return $cell+1;
     }
 }

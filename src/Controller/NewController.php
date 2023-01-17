@@ -11,10 +11,16 @@ class NewController extends AbstractController
     #[Route('/new', name: 'app_new')]
     public function index(): Response
     {
+        $array1=$this->read1('../../Applications FM.xlsx', 'Liste déroulante de choix');
+        $array2=$this->read2('../../Applications FM.xlsx','VI et MP');
+
+
+
+
         return $this->render('new/index.html.twig', [
             'controller_name' => 'NewController',
-            'array1' => $this->read1('../../Applications FM.xlsx','Liste déroulante de choix'),
-            'array2' => $this->read2('../../Applications FM.xlsx','VI et MP')
+            'array1' => $array2,
+            'max' => $this->max(),
         ]);
     }
 
@@ -52,7 +58,7 @@ class NewController extends AbstractController
         } else
             $arr[strval($id)] = strval($cell); // we put everything in array (the key is the coordinates and the value of their data)
     }
-
+    
     $letter = 'A';
     for ($number = 1; ;) { // $number and $letter are the coordinates (A1, A2, B2, C3, ...)
 
@@ -106,5 +112,17 @@ class NewController extends AbstractController
             $letter++; // we put everything in array (the key is the coordinates and the value of their data)
     }
     return $arr;
+    }
+
+    public function max(){ // the total number of applications is noted in the exel file + the first line
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../../Applications FM.xlsx');
+        $sheet = $spreadsheet->getSheetByName('VI et MP');
+        $cell = intval(strval($sheet->getCell('X2')));// The reading makes that we obtain a string, we pass it in int, +1 because we want the number of line to use and not the number of application (the first line!!)
+
+        return $cell+1;
+    }
+
+    public function input(){
+
     }
 }
