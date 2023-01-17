@@ -98,7 +98,7 @@ class Controller extends AbstractController
     public function max(){// the total number of applications is noted in the exel file + the first line
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('../../Applications FM.xlsx');
         $sheet = $spreadsheet->getSheetByName('VI et MP');
-        $cell = intval(strval($sheet->getCell('X2'))); // The reading makes that we obtain a string, we pass it in int, +1 because we want the number of line to use and not the number of application (the first line!!)
+        $cell = intval(strval($sheet->getCell('X3'))); // The reading makes that we obtain a string, we pass it in int, +1 because we want the number of line to use and not the number of application (the first line!!)
 
         return $cell+1;
     }
