@@ -9,16 +9,29 @@
 </style>
 
 <div class="example-wrapper">
-
-{{max}}
-
+<form action="action.php" method="post">
+<input type="hidden" name="max" value={{max}}></p>
 {% for key,value in array1 %}
-
-    {{ value }}
-    <br>
-
+    {% if  key|slice(1, 2) == "1" %}
+        <p>{{value}} : 
+        {% set name = key %}
+    {% endif %}
+    {% if 2 == key|slice(1, 2) %} {# check that the column has more than one line #}
+        <select Id='select' name={{name}} method="post">
+            {% for key,value in array1 %}
+                {% if key|slice(1, 2)> 1 and key|slice(0, 1)== name|slice(0, 1) %}
+                    <OPTION name={{name}} value="{{value}}">{{value}}
+                {% endif %}
+            {% endfor %}      
+        </select>
+    {% endif %}
+    {% if key|slice(0, 1)~'2' in array1|keys %}
+    {% else %}
+    <input type="text" name={{name}} value="none"></p>
+    {% endif %}
 {% endfor %}
-
+<p><input type="submit" value="OK"></p>
+</form>
 
 </div>
 
