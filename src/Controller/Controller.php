@@ -12,6 +12,7 @@ class Controller extends AbstractController
 {
     public string $exel = '../../Applications FM.xlsx';
     public string $sheetPrincipal = 'VI et MP';
+    public string $sheetChoice = 'Liste déroulante de choix';
     public array $array1; //This variable to all data to display the applications
     public array $array2; //this variable to all data to create the application census form
 
@@ -21,9 +22,11 @@ class Controller extends AbstractController
 
         $sheetPrincipal = $this->sheetPrincipal;
 
+        $sheetChoice = $this->sheetChoice;
+
         $this->array1 = $this->read($exel, $sheetPrincipal); //We read and save in a variable to be able to use it several times
 
-        $this->array2 = $this->read1($exel, 'Liste déroulante de choix');
+        $this->array2 = $this->read1($exel, $sheetChoice);
     }
 
     #[Route('/', name: 'app_home')]
@@ -54,6 +57,17 @@ class Controller extends AbstractController
             'max' => $this->max($array1),
             'exel' => $this->exel,
             'sheet' => $this->sheetPrincipal,
+        ]);
+    }
+
+    #[Route('/admin', name: 'app_admin')]
+    public function index4(): Response
+    {
+        return $this->render('admin/index.html.twig', [
+            'controller_name' => 'AdminController',
+            'exel' => $this->exel,
+            'principal' => $this->sheetPrincipal,
+            'choice' => $this->sheetChoice,
         ]);
     }
 

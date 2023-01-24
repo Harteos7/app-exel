@@ -10,7 +10,8 @@ html {
 main {
   z-index: 2;
   position: relative;
-  height: auto;
+  min-height: 100%;
+  max-height: auto;
   width: 100%;
   background-color: #2D3142;
   -webkit-transition: transform .7s ease-in-out;
@@ -18,6 +19,23 @@ main {
   -ms-transition: transform .7s ease-in-out;
   -o-transition: transform .7s ease-in-out;
   transition: transform .7s ease-in-out;
+}
+
+.example-wrapper { 
+margin: 1em auto;
+max-width: 800px;
+width: 95%;
+font: 18px/1.5 sans-serif; 
+}
+
+.example-wrapper code { 
+background: #F5F5F5; 
+padding: 2px 6px; 
+}
+
+.image {
+  object-position: right top;
+  right: 10px;
 }
 
 .sidebar {
