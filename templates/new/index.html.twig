@@ -9,25 +9,29 @@
 </style>
 
 <div class="example-wrapper">
-<form action="action.php" method="post">
-<input type="hidden" name="max" value={{max}}></p>
-{% for key,value in array1 %}
+<form action="{{ path('app_write') }}" method="post">
+<input type="hidden" name="max" value={{max}}></p> 
+<input type="hidden" name="exel" value="{{exel}}"></p>
+<input type="hidden" name="sheet" value="{{sheet}}"></p>
+{% for key,value in array2 %}
     {% if  key|slice(1, 2) == "1" %}
         <p>{{value}} : 
-        {% set name = key %}
+        {% set id = key %}
+        {% set n = 1 %}
     {% endif %}
-    {% if 2 == key|slice(1, 2) %} {# check that the column has more than one line #}
-        <select Id='select' name={{name}} method="post">
-            {% for key,value in array1 %}
-                {% if key|slice(1, 2)> 1 and key|slice(0, 1)== name|slice(0, 1) %}
-                    <OPTION name={{name}} value="{{value}}">{{value}}
+    {% if key|slice(0, 1)~'2' in array2|keys %} {# we check if the second line of the column is filled, if yes it corresponds to if there are pre-registered answers #}
+        {% if n == 1 %} {# we check that this is the first time we display the selection option #}
+        <select Id='select' name={{id}} method="post">
+            {% for key,value in array2 %}
+                {% if key|slice(1, 2)> 1 and key|slice(0, 1)== id|slice(0, 1) %}
+                    <OPTION name={{id}} value="{{value}}">{{value}}
                 {% endif %}
-            {% endfor %}      
-        </select>
-    {% endif %}
-    {% if key|slice(0, 1)~'2' in array1|keys %}
+            {% endfor %}
+        {% set n = 0 %}
+        {% endif %}         
+        </select>    
     {% else %}
-    <input type="text" name={{name}} value="none"></p>
+    <input type="text" name={{id}} value="none"></p>
     {% endif %}
 {% endfor %}
 <p><input type="submit" value="OK"></p>

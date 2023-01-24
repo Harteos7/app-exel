@@ -10,15 +10,28 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Controller extends AbstractController
 {
-    
+    public string $exel = '../../Applications FM.xlsx';
+    public string $sheetPrincipal = 'VI et MP';
+    public array $array1; //This variable to all data to display the applications
+    public array $array2; //this variable to all data to create the application census form
+
+    public function __construct() 
+    {
+        $exel = $this->exel;
+
+        $sheetPrincipal = $this->sheetPrincipal;
+
+        $this->array1 = $this->read($exel, $sheetPrincipal); //We read and save in a variable to be able to use it several times
+
+        $this->array2 = $this->read1($exel, 'Liste déroulante de choix');
+    }
 
     #[Route('/', name: 'app_home')]
     public function index1(): Response
     {
         return $this->render('/index.html.twig', [
+            'array1' => $this->array1,
             'controller_name' => 'Controller',
-            $array1 = $this->read('../../Applications FM.xlsx', 'VI et MP'), //We read and save in a variable to be able to use it several times
-            'array1' => $array1,
         ]); 
     }
 
@@ -36,9 +49,11 @@ class Controller extends AbstractController
     {
         return $this->render('new/index.html.twig', [
             'controller_name' => 'Controller',
-            $array2 = $this->read('../../Applications FM.xlsx', 'VI et MP'), //We read and save in a variable to be able to use it several times
-            'array1' => $this->read1('../../Applications FM.xlsx', 'Liste déroulante de choix'),
-            'max' => $this->max($array2),
+            $array1 = $this->array1, //We read and save in a variable to be able to use it several times
+            'array2' => $this->array2,
+            'max' => $this->max($array1),
+            'exel' => $this->exel,
+            'sheet' => $this->sheetPrincipal,
         ]);
     }
 
