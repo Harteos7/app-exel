@@ -14,6 +14,7 @@ class WriteController extends AbstractController
     {
         return $this->render('ok.html.twig', [
             $this->write(),
+            'max'=>$_POST['max'],
         ]);
     }
 

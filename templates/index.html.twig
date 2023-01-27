@@ -7,15 +7,27 @@
 <div classe="image">
 <img src="icon.png">
 </div>
-
+<form action="{{ path('app_read') }}" method="post">
 <div class="example-wrapper">
-Welcome here
+<h1>Welcome !</h1>
 <br>
+{% for value in array1 %}
 <label class="switch">
-	<input type="checkbox" />
+	<input type="checkbox" id="demo2" value="{{value}}" onclick="clickFn(event)"/>
 	<span></span>
 </label>
-
+{{ value }}
+<br>
+{% endfor %}
+<script>
+function clickFn(event) {
+  const checkbox = event.currentTarget;
+  var input = document.getElementById("demo2").value;
+  alert(checkbox.checked);
+  alert(input);
+}
+</script>
+</form>
 </div>
 
 

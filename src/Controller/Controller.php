@@ -13,6 +13,7 @@ class Controller extends AbstractController
     public string $exel = '../../Applications FM.xlsx';
     public string $sheetPrincipal = 'VI et MP';
     public string $sheetChoice = 'Liste déroulante de choix';
+    public string $name = 'Name of CURRENT APPLICATION';
     public array $array1; //This variable to all data to display the applications
     public array $array2; //this variable to all data to create the application census form
 
@@ -27,13 +28,15 @@ class Controller extends AbstractController
         $this->array1 = $this->read($exel, $sheetPrincipal); //We read and save in a variable to be able to use it several times
 
         $this->array2 = $this->read1($exel, $sheetChoice);
+
     }
 
     #[Route('/', name: 'app_home')]
     public function index1(): Response
     {
         return $this->render('/index.html.twig', [
-            'array1' => $this->array1,
+            $array1 = $this->array1, //We read and save in a variable to be able to use it several times
+            'array1' => $this->famille($array1),
             'controller_name' => 'Controller',
         ]); 
     }
@@ -53,10 +56,14 @@ class Controller extends AbstractController
         return $this->render('new/index.html.twig', [
             'controller_name' => 'Controller',
             $array1 = $this->array1, //We read and save in a variable to be able to use it several times
+            $name = $this->name,
+            'array1' => $this->array1,
             'array2' => $this->array2,
+            'name' => $this->name,
+            'sheet' => $this->sheetPrincipal,
             'max' => $this->max($array1),
             'exel' => $this->exel,
-            'sheet' => $this->sheetPrincipal,
+            'arrayname' => $this->name($array1, $name), 
         ]);
     }
 
@@ -68,6 +75,7 @@ class Controller extends AbstractController
             'exel' => $this->exel,
             'principal' => $this->sheetPrincipal,
             'choice' => $this->sheetChoice,
+            'name' => $this->name,
         ]);
     }
 
@@ -149,7 +157,7 @@ class Controller extends AbstractController
                 $max++;
             }
         }
-        return $max;
+        return $max+1;
     }
 
     public function read1(string $exel, string $sheetC)
@@ -217,5 +225,34 @@ class Controller extends AbstractController
         
     }
     return $arr;
+    }
+
+    public function name(array $arr,string $name) { // function to get an array of all application names listed 
+        foreach ($arr as $cle => $valeur) {
+            if ($valeur == $name) {
+                $letter=$cle[0];
+            }
+        }
+        $array = array();
+        $n = 0;
+        foreach ($arr as $cle => $valeur) {
+            if ($cle[0] == $letter && $n != 0 &&$n != 1 ) {
+                $array[] = $valeur;
+            }elseif ($cle[0] == $letter){
+                $n++;
+            }
+        }
+        return $array;
+    }
+
+    public function famille(array $arr) {
+        $array = array();
+        foreach ($arr as $cle => $valeur) {
+            if (substr($cle, 1, 4) == '2') {
+                $array[] = $valeur;
+            }
+        }
+        $array = array_unique($array);
+        return $array;
     }
 }

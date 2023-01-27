@@ -3,7 +3,6 @@
 {% block title %}New{% endblock %}
 
 {% block body %}
-
 <div class="example-wrapper">
 <form action="{{ path('app_write') }}" method="post">
 <input type="hidden" name="max" value={{max}}></p> 
@@ -14,6 +13,7 @@
         <p>{{value}} : 
         {% set id = key %}
         {% set n = 1 %}
+        {% set input = '' %}
     {% endif %}
     {% if key|slice(0, 1)~'2' in array2|keys %} {# we check if the second line of the column is filled, if yes it corresponds to if there are pre-registered answers #}
         {% if n == 1 %} {# we check that this is the first time we display the selection option #}
@@ -27,12 +27,28 @@
         {% endif %}         
         </select>    
     {% else %}
-    <input type="text" name={{id}} value="none"></p>
+        {% if value == name %}
+        <input type="text" id="demo2" name={{id}} value="" onkeyup="verify()"></p>
+        <p id="demo1"></p>
+        <script>
+
+        function verify()
+        {
+            var input = document.getElementById("demo2").value;
+            var number = input.length;
+            const array = JSON.parse('{{ arrayname | json_encode | raw }}');
+            if (array.includes(input)) { 
+                alert("L'application est déja recencer");
+            }
+        }
+        </script>
+        {% else %}
+        <input type="text" name={{id}} value="none"></p>
+        {% endif %}
     {% endif %}
 {% endfor %}
 <p><input type="submit" value="OK"></p>
 </form>
-
 </div>
 
 {% endblock %}
