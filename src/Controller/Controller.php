@@ -31,6 +31,11 @@ class Controller extends AbstractController
 
     }
 
+    public function getMonArray(){
+        return $this->array1;
+    }
+
+
     #[Route('/', name: 'app_home')]
     public function index1(): Response
     {

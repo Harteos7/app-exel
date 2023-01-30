@@ -8,11 +8,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReadController extends AbstractController
 {
+    
     #[Route('/read', name: 'app_read')]
     public function index(): Response
     {
         return $this->render('read/index.html.twig', [
             'controller_name' => 'ReadController',
+            'test'=>$_POST['test'],
+            $a = new Controller(),
+            'array'=>$a->getMonArray(),
         ]);
     }
 }

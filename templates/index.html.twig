@@ -20,13 +20,21 @@
 <br>
 {% endfor %}
 <script>
+let selected = [];
 function clickFn(event) {
   const checkbox = event.currentTarget;
-  var input = document.getElementById("demo2").value;
-  alert(checkbox.checked);
-  alert(input);
+  if (checkbox.checked == true) {
+    selected.push(checkbox.value);
+    output.value = selected;
+  } else {
+    var index = selected.indexOf(checkbox.value);
+    selected.splice(index, 1);
+    output.value = selected;
+  }
 }
 </script>
+<input type="hidden" id="output" name="test" value=""></p>
+<input type="submit" value="OK"></p>
 </form>
 </div>
 
