@@ -1,29 +1,57 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReadController!{% endblock %}
+{% block title %}sort{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/02 Mon projet/projet sanofi/app/src/Controller/ReadController.php'|file_link(0) }}">src/Controller/ReadController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/02 Mon projet/projet sanofi/app/templates/read/index.html.twig'|file_link(0) }}">templates/read/index.html.twig</a></code></li>
-    </ul>
-    {{test}}
-    {% for key,value in array %}
-
-    {{key}}
-    <br>
-    {{ value }}
-    <br>
-
-    {% endfor %}
+  <div class="table-container">  
+  <div class="table-horizontal-container">
+    <table class="unfixed-table">
+      <thead>
+        <tr> 
+		{% for key1,value1 in sort %}         
+		{% for key2,value2 in arr %}
+			{% if key2|slice(0, 1) == value1 %}			
+				{% if key2|slice(1, 2) == 1 %}
+					<th>{{ value2 }}</th>
+				{% endif %}
+			{% endif %}
+        {% endfor %}
+		{% endfor %}
+		</tr>
+	</thead>
+	<tbody>
+	{% set n = 3 %}
+	{% set cont = 0 %}
+	{% for n in 3..max %}
+	<tr>
+	  	{% for key1,value1 in sort %}         
+		{% for key2,value2 in arr %}
+			{% set a = key2|slice(0, 1) %}
+			{% if key2|slice(0, 1) == value1 %}
+				{% if key2|slice(1, 2) == n and key1 > cont %}
+					<th> </th>
+					{% set cont = cont + 1 %}
+				{% endif %}
+				{% if key2|slice(1, 2) == n and key1 == cont %}
+					<th>{{ value2 }} {{key1}} {{cont}}</th>
+					{% set cont = cont + 1 %}
+				{% endif %}
+			{% endif %}
+        {% endfor %}
+		{% endfor %}
+	</tr>
+	{% set cont = 0 %}
+	{% endfor %}
+	</tbody>
+    </table>
+  </div>
+</div>
+<script src="//cdn.amcharts.com/lib/5/index.js"></script>
+<script src="//cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="//cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<div id="chartdiv"></div>
+<input type="button" value="move legend" onclick="moveLegend()" />
 </div>
 {% endblock %}

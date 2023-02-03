@@ -35,9 +35,11 @@
         function verify()
         {
             var input = document.getElementById("demo2").value;
+            var input = input.toLowerCase();
             var number = input.length;
             const array = JSON.parse('{{ arrayname | json_encode | raw }}');
-            if (array.includes(input)) { 
+            const array1 = array.map(array => array.toLowerCase());
+            if (array1.includes(input)) { 
                 alert("L'application est déja recencer");
             }
         }

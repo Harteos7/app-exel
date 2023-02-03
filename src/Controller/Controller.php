@@ -35,6 +35,12 @@ class Controller extends AbstractController
         return $this->array1;
     }
 
+    public function getMax(){
+        $array1 = $this->array1;
+        $max = $this->max($array1);
+        return $max;
+    }
+
 
     #[Route('/', name: 'app_home')]
     public function index1(): Response
@@ -81,6 +87,7 @@ class Controller extends AbstractController
             'principal' => $this->sheetPrincipal,
             'choice' => $this->sheetChoice,
             'name' => $this->name,
+            'max' => $this->getMax(),
         ]);
     }
 
