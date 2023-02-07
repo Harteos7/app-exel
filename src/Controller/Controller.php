@@ -49,6 +49,7 @@ class Controller extends AbstractController
             $array1 = $this->array1, //We read and save in a variable to be able to use it several times
             'array1' => $this->famille($array1),
             'controller_name' => 'Controller',
+            'arr' => $this->array1,
         ]); 
     }
 
@@ -111,24 +112,23 @@ class Controller extends AbstractController
             }
             if ($cell == '') { // we check that the new cell has data otherwise we change the column
                 $letter++;
-                $letterM=$letter;  //$letterM is the largest letter used in the coordinates of the exel table;
                 $number = 1;
                 $id = strval($letter) . strval($number);
                 $cell = $sheet->getCell($id);
 
                 if ($cell == '') {
-                    $letterM = substr(strval($letterM), -1); //We recover the letter of before because this one corresponds to an empty column
                     break;
                 } // we check if the first cell of the new column has data if not, we stop the for (break)
                 else
                     $arr[strval($id)] = strval($cell);
+                    $letterM=$letter;  //$letterM is the largest letter used in the coordinates of the exel table;
             } else
                 $arr[strval($id)] = strval($cell); // we put everything in array (the key is the coordinates and the value of their data)
         }
-
         $writer = new Xlsx($spreadsheet);
         $writer->save($exel);
         $letter++;
+        
         
         $letter = 'A';
         for ($number = 1; ;) { // $number and $letter are the coordinates (A1, A2, B2, C3, ...)
