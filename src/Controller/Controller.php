@@ -94,7 +94,7 @@ class Controller extends AbstractController
 
     public function read(string $exel, string $sheetC)
     {
-
+ 
         //load spreadsheet
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(strval($exel));
         $sheet = $spreadsheet->getSheetByName(strval($sheetC));
@@ -120,13 +120,9 @@ class Controller extends AbstractController
                     break;
                 } // we check if the first cell of the new column has data if not, we stop the for (break)
                 else
-                    $arr[strval($id)] = strval($cell);
                     $letterM=$letter;  //$letterM is the largest letter used in the coordinates of the exel table;
-            } else
-                $arr[strval($id)] = strval($cell); // we put everything in array (the key is the coordinates and the value of their data)
+            }
         }
-        $writer = new Xlsx($spreadsheet);
-        $writer->save($exel);
         $letter++;
         
         
@@ -151,7 +147,9 @@ class Controller extends AbstractController
                 $id = strval($letter) . strval($number); // $id is the coordinates of the exel box
                 $cell = $sheet->getCell($id); // $cell is the content of the exel box
                 if ($cell == '' ) // this script saves the cell if it is filled
-                {break;}
+                {
+                    break;
+                }
                 $cell = $sheet->getCell($id);
                 $arr[strval($id)] = strval($cell);
                 break; // end
@@ -228,7 +226,9 @@ class Controller extends AbstractController
             $id = strval($letter) . strval($number); // $id is the coordinates of the exel box
             $cell = $sheet->getCell($id); // $cell is the content of the exel box
             if ($cell == '' ) // this script saves the cell if it is filled
-            {break;}
+            {
+                break;
+            }
             $cell = $sheet->getCell($id);
             $arr[strval($id)] = strval($cell);
             break; // end
